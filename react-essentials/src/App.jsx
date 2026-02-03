@@ -13,7 +13,7 @@ function App() {
   function handleSelect(selectedButton) {
     // Selected button => JSX, Components, Props, State
     console.log('Tab selected:', selectedButton);
-    setTabState(previousState => selectedButton)
+    setTabState(previousState => selectedButton);
   }
 
    let tabContent = <p>Please select a tab to see an example.</p>;
@@ -37,7 +37,7 @@ function App() {
           <h2>Core Concepts</h2>
           <ul>
             {CORE_CONCEPTS.map(concept => (
-              <CoreConcept 
+              <CoreConcept key={concept.title}
                 {...concept}
               />
             ))}
@@ -47,10 +47,10 @@ function App() {
         <section id="examples">
             <h2>Examples</h2>
             <menu>
-              <TabButton onSelect={() => handleSelect('jsx')}>JSX</TabButton>
-              <TabButton onSelect={() => handleSelect('components')}>Components</TabButton>
-              <TabButton onSelect={() => handleSelect('props')}>Props</TabButton>
-              <TabButton onSelect={() => handleSelect('state')}>State</TabButton>
+              <TabButton onSelect={() => handleSelect('jsx') } isSelected={tabState === 'jsx'}>JSX</TabButton>
+              <TabButton onSelect={() => handleSelect('components') } isSelected={tabState === 'components'}>Components</TabButton>
+              <TabButton onSelect={() => handleSelect('props') } isSelected={tabState === 'props'}>Props</TabButton>
+              <TabButton onSelect={() => handleSelect('state') } isSelected={tabState === 'state'}>State</TabButton>
             </menu>
             {tabContent}
           </section>
