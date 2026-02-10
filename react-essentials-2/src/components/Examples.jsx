@@ -30,10 +30,10 @@ export default function Examples() {
 
     return (<Section id="examples" title="Examples">
             <menu>
-              <TabButton onSelect={() => handleSelect('jsx') } isSelected={tabState === 'jsx'}>JSX</TabButton>
-              <TabButton onSelect={() => handleSelect('components') } isSelected={tabState === 'components'}>Components</TabButton>
-              <TabButton onSelect={() => handleSelect('props') } isSelected={tabState === 'props'}>Props</TabButton>
-              <TabButton onSelect={() => handleSelect('state') } isSelected={tabState === 'state'}>State</TabButton>
+              <TabButton onClick={() => handleSelect('jsx') } isSelected={tabState === 'jsx'}>JSX</TabButton>
+              <TabButton onClick={() => handleSelect('components') } isSelected={tabState === 'components'}>Components</TabButton>
+              <TabButton onClick={() => handleSelect('props') } isSelected={tabState === 'props'}>Props</TabButton>
+              <TabButton onClick={() => handleSelect('state') } isSelected={tabState === 'state'}>State</TabButton>
             </menu>
             {tabContent}
           </Section>);
