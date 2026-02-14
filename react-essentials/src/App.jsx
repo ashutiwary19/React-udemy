@@ -7,15 +7,28 @@ import CoreConcept from './components/CoreConcept.jsx';
 import TabButton from './components/TabButton.jsx';
 
 function App() {
-  const [tabState, setTabState] = useState("Please click a tab to see an example.");
+  const [tabState, setTabState] = useState("");
   // tabState will always be in a array format: [initialValue, setValueFunction] 
 
-  let tabContent = <p>Select a tab to see an example.</p>;
   function handleSelect(selectedButton) {
     // Selected button => JSX, Components, Props, State
     console.log('Tab selected:', selectedButton);
     setTabState(previousState => selectedButton)
   }
+
+   let tabContent = <p>Please select a tab to see an example.</p>;
+  if (tabState) {
+    tabContent = (
+      <div id="tab-content">
+        <h3>{EXAMPLES[tabState]?.title || "Please select a tab to see an example."}</h3>
+        <p>{EXAMPLES[tabState]?.description || "No description available for this example."}</p>
+        <pre>
+          <code>{EXAMPLES[tabState]?.code || ""}</code>
+        </pre>
+      </div>
+    );
+  } 
+
   return (  
     <div>
      <Header />
@@ -39,14 +52,8 @@ function App() {
               <TabButton onSelect={() => handleSelect('props')}>Props</TabButton>
               <TabButton onSelect={() => handleSelect('state')}>State</TabButton>
             </menu>
-            <div id="tab-content">
-              <h3>{EXAMPLES[tabState]?.title || "Please select a tab to see an example."}</h3>
-              <p>{EXAMPLES[tabState]?.description || "No description available for this example."}</p>
-              <pre>
-                <code>{EXAMPLES[tabState]?.code || ""}</code>
-              </pre>
-            </div>
-        </section>
+            {tabContent}
+          </section>
       </main>
     </div>
   );
