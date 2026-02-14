@@ -1,8 +1,11 @@
-export function Log() {
+export function Log({ gameTurns }) {
   return (
-    <ol>
-      <li>Player 1 is X</li>
-      <li>Player 2 is O</li>
+    <ol id="log">
+      {gameTurns.map((turn, index) => (
+        <li key={`${turn.square.row}-${turn.square.col}`}>
+          Player {turn.player} selected {turn.square.row}, {turn.square.col}
+        </li>
+      ))}
     </ol>
   );
 }
