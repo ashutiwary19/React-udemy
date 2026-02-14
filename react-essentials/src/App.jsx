@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import reactImg from './assets/react-core-concepts.png';
-import {CORE_CONCEPTS} from './data.js';
+import {CORE_CONCEPTS, EXAMPLES} from './data.js';
 import Header from './components/Header.jsx';
 import CoreConcept from './components/CoreConcept.jsx';
 import TabButton from './components/TabButton.jsx';
@@ -14,20 +14,7 @@ function App() {
   function handleSelect(selectedButton) {
     // Selected button => JSX, Components, Props, State
     console.log('Tab selected:', selectedButton);
-    setTabState(previousState => {
-      switch(selectedButton) {
-        case 'JSX':
-          return "JSX stands for JavaScript XML. It allows you to write HTML-like syntax in your JavaScript code, which React then transforms into React elements.";
-        case 'Components':
-          return "Components are the building blocks of a React application. They are reusable pieces of UI that can be nested, managed, and handled independently.";
-        case 'Props':
-          return "Props (short for properties) are read-only attributes used to pass data from a parent component to a child component in React.";
-        case 'State':
-          return "State is a built-in React object that allows components to create and manage their own data. State changes can trigger re-renders of the component.";
-        default:
-          return previousState;
-      }
-    })
+    setTabState(previousState => selectedButton)
   }
   return (  
     <div>
@@ -47,12 +34,18 @@ function App() {
         <section id="examples">
             <h2>Examples</h2>
             <menu>
-              <TabButton onSelect={() => handleSelect('JSX')}>JSX</TabButton>
-              <TabButton onSelect={() => handleSelect('Components')}>Components</TabButton>
-              <TabButton onSelect={() => handleSelect('Props')}>Props</TabButton>
-              <TabButton onSelect={() => handleSelect('State')}>State</TabButton>
+              <TabButton onSelect={() => handleSelect('jsx')}>JSX</TabButton>
+              <TabButton onSelect={() => handleSelect('components')}>Components</TabButton>
+              <TabButton onSelect={() => handleSelect('props')}>Props</TabButton>
+              <TabButton onSelect={() => handleSelect('state')}>State</TabButton>
             </menu>
-            {tabState}
+            <div id="tab-content">
+              <h3>{EXAMPLES[tabState]?.title || "Please select a tab to see an example."}</h3>
+              <p>{EXAMPLES[tabState]?.description || "No description available for this example."}</p>
+              <pre>
+                <code>{EXAMPLES[tabState]?.code || ""}</code>
+              </pre>
+            </div>
         </section>
       </main>
     </div>
