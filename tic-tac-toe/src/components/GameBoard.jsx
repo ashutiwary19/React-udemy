@@ -6,8 +6,13 @@ const initialBoardState = [
   [null, null, null],
 ];
 
-export function GameBoard({onSelectSquare, activePlayer}) {
-  const [boardState, setBoardState] = useState(initialBoardState);
+export function GameBoard({
+  /* onSelectSquare,
+  activePlayer, */
+  gameStateChangeHandler,
+  turns,
+}) {
+  /*const [boardState, setBoardState] = useState(initialBoardState);
 
   function handleGameStateChange(rowIndex, colIndex, symbol) {
     setBoardState((oldState) => {
@@ -16,11 +21,16 @@ export function GameBoard({onSelectSquare, activePlayer}) {
       return newState;
     });
     onSelectSquare();
+  }*/
+
+  let gameBoard = initialBoardState;
+  for (const turn of turns) {
+    gameBoard[turn.square.row][turn.square.col] = turn.player;
   }
 
   return (
     <ol id="game-board">
-      {initialBoardState.map((row, rowIndex) => (
+      {gameBoard.map((row, rowIndex) => (
         <li key={rowIndex}>
           <ol>
             {row.map((cell, cellIndex) => (
@@ -29,11 +39,9 @@ export function GameBoard({onSelectSquare, activePlayer}) {
                 className="cell"
               >
                 <button
-                  onClick={() =>
-                    handleGameStateChange(rowIndex, cellIndex, activePlayer)
-                  }
+                  onClick={() => gameStateChangeHandler(rowIndex, cellIndex)}
                 >
-                  {boardState[rowIndex][cellIndex]}
+                  {gameBoard[rowIndex][cellIndex]}
                 </button>
               </li>
             ))}
