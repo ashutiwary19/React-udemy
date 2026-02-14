@@ -6,7 +6,7 @@ const initialBoardState = [
   [null, null, null],
 ];
 
-export function GameBoard() {
+export function GameBoard({onSelectSquare, activePlayer}) {
   const [boardState, setBoardState] = useState(initialBoardState);
 
   function handleGameStateChange(rowIndex, colIndex, symbol) {
@@ -15,6 +15,7 @@ export function GameBoard() {
       newState[rowIndex][colIndex] = symbol;
       return newState;
     });
+    onSelectSquare();
   }
 
   return (
@@ -29,7 +30,7 @@ export function GameBoard() {
               >
                 <button
                   onClick={() =>
-                    handleGameStateChange(rowIndex, cellIndex, 'X')
+                    handleGameStateChange(rowIndex, cellIndex, activePlayer)
                   }
                 >
                   {boardState[rowIndex][cellIndex]}
