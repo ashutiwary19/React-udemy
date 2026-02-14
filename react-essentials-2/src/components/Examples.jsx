@@ -27,9 +27,10 @@ export default function Examples() {
         </div>
     );
     } 
-
+    // Since menu is native component we are passing with double quotes and not as a variable. 
+    // For React components we need to pass as variable {}
     return (<Section id="examples" title="Examples">
-            <Tab ButtonsContainer="menu" buttons={<>
+            <Tab buttons={<>
               <TabButton onClick={() => handleSelect('jsx') } isSelected={tabState === 'jsx'}>JSX</TabButton>
               <TabButton onClick={() => handleSelect('components') } isSelected={tabState === 'components'}>Components</TabButton>
               <TabButton onClick={() => handleSelect('props') } isSelected={tabState === 'props'}>Props</TabButton>
