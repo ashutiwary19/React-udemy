@@ -15,15 +15,15 @@ const Label = styled.label`
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #6b7280;
+  color: ${({ $invalid }) => ($invalid ? "#f87171" : "#6b7280")};
 `;
 
 const Input = styled.input`
   width: 100%;
   padding: 0.75rem 1rem;
   line-height: 1.5;
-  background-color: #d1d5db;
-  color: #374151;
+  background-color: ${({ $invalid }) => ($invalid ? "#fed2d2" : "#d1d5db")};
+  color: ${({ $invalid }) => ($invalid ? "#f87171" : "#374151")};
   border: 1px solid transparent;
   border-radius: 0.25rem;
   box-shadow:
@@ -55,25 +55,21 @@ export default function AuthInputs() {
     <div id="auth-inputs">
       <ContollerContainer>
         <p>
-          <Label className={`label${emailNotValid ? " invalid" : ""}`}>
-            Email
-          </Label>
+          <Label $invalid={emailNotValid}>Email</Label>
           <Input
             type="email"
             /* style={{
               background: emailNotValid ? "#fed2d2" : "#d1d5db",
             }} */
-            className={emailNotValid ? "invalid" : undefined}
+            $invalid={emailNotValid}
             onChange={(event) => handleInputChange("email", event.target.value)}
           />
         </p>
         <p>
-          <Label className={`label${passwordNotValid ? " invalid" : ""}`}>
-            Password
-          </Label>
+          <Label $invalid={passwordNotValid}>Password</Label>
           <Input
             type="password"
-            className={passwordNotValid ? "invalid" : undefined}
+            $invalid={passwordNotValid}
             onChange={(event) =>
               handleInputChange("password", event.target.value)
             }
