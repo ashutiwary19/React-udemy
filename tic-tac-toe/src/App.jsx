@@ -64,13 +64,13 @@ function App() {
           className="highlight-player"
         >
           <Player
-            name="Player 1"
+            name={players.X}
             symbol="X"
             isActive={currentPlayer === 'X'}
             playerNameChangeHandler={handlePlayerNameChange}
           />
           <Player
-            name="Player 2"
+            name={players.O}
             symbol="O"
             isActive={currentPlayer === 'O'}
             playerNameChangeHandler={handlePlayerNameChange}
