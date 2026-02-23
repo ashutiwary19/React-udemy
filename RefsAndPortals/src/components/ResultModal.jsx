@@ -1,6 +1,6 @@
 import { useImperativeHandle, useRef } from "react";
 
-export function ResultModal({ result, targetTime, ref }) {
+export function ResultModal({ targetTime, timeRemaining, onReset, ref }) {
   const dialogRef = useRef();
   useImperativeHandle(ref, () => ({
     open: () => dialogRef.current.showModal(),
@@ -8,10 +8,11 @@ export function ResultModal({ result, targetTime, ref }) {
 
   return (
     <dialog className="result-modal" ref={dialogRef}>
-      <h2>Your {result}</h2>
+      <h2>You {timeRemaining <= 0 ? "lost" : "won"}!</h2>
       <p>Target time: {targetTime} seconds</p>
+      <p>Time remaining: {timeRemaining} ms</p>
       <form method="dialog">
-        <button>Close</button>
+        <button onClick={onReset}>Reset Challenge</button>
       </form>
     </dialog>
   );
