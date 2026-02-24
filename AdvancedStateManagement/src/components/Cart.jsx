@@ -1,7 +1,17 @@
-export default function Cart({ items, onUpdateItemQuantity }) {
+import { useContext, use } from "react";
+import { CartContext } from "../store/shopping-cart";
+
+export default function Cart({ onUpdateItemQuantity }) {
+  // const {cartCtx} = useContext(CartContext);
+  const { items } = useContext(CartContext);
+
+  // use is a React 19+ hook that can be used to consume context values without needing to wrap the component in a context provider.
+  // It allows you to directly access the context value within the component, making it more concise and easier to read.
+  // const cartCtx = use(CartContext);
+
   const totalPrice = items.reduce(
     (acc, item) => acc + item.price * item.quantity,
-    0
+    0,
   );
   const formattedTotalPrice = `$${totalPrice.toFixed(2)}`;
 
