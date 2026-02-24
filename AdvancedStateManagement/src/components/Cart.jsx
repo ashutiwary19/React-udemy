@@ -1,9 +1,9 @@
 import { useContext, use } from "react";
 import { CartContext } from "../store/shopping-cart";
 
-export default function Cart({ onUpdateItemQuantity }) {
+export default function Cart() {
   // const {cartCtx} = useContext(CartContext);
-  const { items } = useContext(CartContext);
+  const { items, updateCartItemQuantity } = useContext(CartContext);
 
   // use is a React 19+ hook that can be used to consume context values without needing to wrap the component in a context provider.
   // It allows you to directly access the context value within the component, making it more concise and easier to read.
@@ -30,11 +30,11 @@ export default function Cart({ onUpdateItemQuantity }) {
                   <span> ({formattedPrice})</span>
                 </div>
                 <div className="cart-item-actions">
-                  <button onClick={() => onUpdateItemQuantity(item.id, -1)}>
+                  <button onClick={() => updateCartItemQuantity(item.id, -1)}>
                     -
                   </button>
                   <span>{item.quantity}</span>
-                  <button onClick={() => onUpdateItemQuantity(item.id, 1)}>
+                  <button onClick={() => updateCartItemQuantity(item.id, 1)}>
                     +
                   </button>
                 </div>
