@@ -1,22 +1,18 @@
 import { useEffect } from "react";
 
 export default function DeleteConfirmation({ onConfirm, onCancel }) {
-  useEffect(
-    () => {
-      const timer = setTimeout(() => {
-        onConfirm();
-      }, 3000);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onConfirm();
+    }, 3000);
 
-      return () => {
-        clearTimeout(timer);
-      };
-    },
-    [
-      /* onConfirm*/
-    ],
-  );
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [onConfirm]);
   // If add onConfirm function to dependency it will go to infinite loop
   // Why every re-render function object is created again
+  // We can use useCallback hook to solve this problem
   return (
     <div id="delete-confirmation">
       <h2>Are you sure?</h2>

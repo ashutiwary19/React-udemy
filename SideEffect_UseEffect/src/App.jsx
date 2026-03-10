@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 import Places from "./components/Places.jsx";
 import { AVAILABLE_PLACES } from "./data.js";
@@ -84,25 +84,33 @@ function App() {
       );
   }
 
-  function handleRemovePlace() {
-    setPickedPlaces((prevPickedPlaces) =>
-      prevPickedPlaces.filter((place) => place.id !== selectedPlace.current),
-    );
-    const storedIds = JSON.parse(localStorage.getItem("selectedPlaces")) || [];
-    localStorage.setItem(
-      "selectedPlaces",
-      JSON.stringify(storedIds.filter((id) => id != selectedPlace.current)),
-    );
-    // modal.current.close();
-    setIsModelOpen(false);
-  }
+  // Using on callback will solve function depdency infinite loop problem
+  // as it will not get create on every re-render but just once for first time
+  const onConformCallback = useCallback(
+    function handleRemovePlace() {
+      setPickedPlaces((prevPickedPlaces) =>
+        prevPickedPlaces.filter((place) => place.id !== selectedPlace.current),
+      );
+      const storedIds =
+        JSON.parse(localStorage.getItem("selectedPlaces")) || [];
+      localStorage.setItem(
+        "selectedPlaces",
+        JSON.stringify(storedIds.filter((id) => id != selectedPlace.current)),
+      );
+      // modal.current.close();
+      setIsModelOpen(false);
+    },
+    [
+      /* Depdendent values used inside wrapper function */
+    ],
+  );
 
   return (
     <>
       <Modal ref={modal} open={isModalOpen} onClose={handleStopRemovePlace}>
         <DeleteConfirmation
           onCancel={handleStopRemovePlace}
-          onConfirm={handleRemovePlace}
+          onConfirm={onConformCallback}
         />
       </Modal>
 
