@@ -1,15 +1,32 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-export default function DeleteConfirmation({ onConfirm, onCancel }) {
+const TIMER = 3000;
+
+export default function DeleteConfirmation({ onConfirm, onCancel, isOpen }) {
+  const [remainingTime, setRemainingTime] = useState(TIMER);
   useEffect(() => {
+    if (!open) return;
+    setRemainingTime(TIMER);
+    console.log("Interval :", remainingTime);
+    const interval = setInterval(() => {
+      setRemainingTime((prev) => prev - 10);
+    }, 10);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
     const timer = setTimeout(() => {
       onConfirm();
-    }, 3000);
+    }, TIMER);
 
     return () => {
       clearTimeout(timer);
     };
-  }, [onConfirm]);
+  }, [onConfirm, isOpen]);
   // If add onConfirm function to dependency it will go to infinite loop
   // Why every re-render function object is created again
   // We can use useCallback hook to solve this problem
@@ -25,6 +42,7 @@ export default function DeleteConfirmation({ onConfirm, onCancel }) {
           Yes
         </button>
       </div>
+      <progress value={remainingTime} max={TIMER} />
     </div>
   );
 }
