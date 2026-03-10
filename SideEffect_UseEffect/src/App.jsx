@@ -9,9 +9,14 @@ import { useEffect } from "react";
 import { sortPlacesByDistance } from "./loc.js";
 
 function App() {
+  const storedIds = JSON.parse(localStorage.getItem("selectedPlaces")) || [];
+  const selPlaces = AVAILABLE_PLACES.filter(
+    (place) => storedIds.indexOf(place.id) != -1,
+  );
+  const [isModalOpen, setIsModelOpen] = useState(false);
   const modal = useRef();
   const selectedPlace = useRef();
-  const [pickedPlaces, setPickedPlaces] = useState([]);
+  const [pickedPlaces, setPickedPlaces] = useState(selPlaces);
   const [availablePlaces, setAvailablePlaces] = useState([]);
   // This will crash our application as
   // setAvailablePlaces will re-render the component.
@@ -43,13 +48,24 @@ function App() {
     });
   }, []);
 
+  // This is not needed as this is not async and can be needed initially line by line
+  /*useEffect(() => {
+    const storedIds = JSON.parse(localStorage.getItem("selectedPlaces")) || [];
+    const selPlaces = AVAILABLE_PLACES.filter(
+      (place) => storedIds.indexOf(place.id) != -1,
+    );
+    setPickedPlaces(selPlaces);
+  }, []);*/
+
   function handleStartRemovePlace(id) {
-    modal.current.open();
+    // modal.current.open();
+    setIsModelOpen(true);
     selectedPlace.current = id;
   }
 
   function handleStopRemovePlace() {
-    modal.current.close();
+    // modal.current.close();
+    setIsModelOpen(false);
   }
 
   function handleSelectPlace(id) {
@@ -60,18 +76,25 @@ function App() {
       const place = AVAILABLE_PLACES.find((place) => place.id === id);
       return [place, ...prevPickedPlaces];
     });
+    const storedIds = JSON.parse(localStorage.getItem("selectedPlaces")) || [];
+    if (storedIds.indexOf(id) == -1)
+      localStorage.setItem(
+        "selectedPlaces",
+        JSON.stringify([id, ...storedIds]),
+      );
   }
 
   function handleRemovePlace() {
     setPickedPlaces((prevPickedPlaces) =>
       prevPickedPlaces.filter((place) => place.id !== selectedPlace.current),
     );
-    modal.current.close();
+    // modal.current.close();
+    setIsModelOpen(false);
   }
 
   return (
     <>
-      <Modal ref={modal}>
+      <Modal ref={modal} open={isModalOpen} onClose={handleStopRemovePlace}>
         <DeleteConfirmation
           onCancel={handleStopRemovePlace}
           onConfirm={handleRemovePlace}
