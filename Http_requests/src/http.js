@@ -7,6 +7,15 @@ export async function fetchAvailablePlaces() {
   return responseJson.places;
 }
 
+export async function fetchUserPlaces() {
+  const resposne = await fetch("http://localhost:3000/user-places");
+  const responseJson = await resposne.json();
+  if (!resposne.ok) {
+    throw new Error("Error while fetching places");
+  }
+  return responseJson.places;
+}
+
 export async function updateUserPlaces(selPlaces) {
   const resposne = await fetch("http://localhost:3000/user-places", {
     method: "PUT",
