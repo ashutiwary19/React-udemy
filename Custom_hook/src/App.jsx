@@ -6,7 +6,6 @@ import DeleteConfirmation from "./components/DeleteConfirmation.jsx";
 import logoImg from "./assets/logo.png";
 import AvailablePlaces from "./components/AvailablePlaces.jsx";
 import { fetchUserPlaces, updateUserPlaces } from "./http.js";
-import { useEffect } from "react";
 import useFetch from "./hooks/useFetch.js";
 
 function App() {
@@ -23,19 +22,6 @@ function App() {
     setModalIsOpen(true);
     selectedPlace.current = place;
   }
-
-  /*useEffect(() => {
-    async function fetchPlaces() {
-      try {
-        const userPlace = await fetchUserPlaces();
-        setUserPlaces(userPlace);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
-    fetchPlaces();
-  }, []);*/
 
   function handleStopRemovePlace() {
     setModalIsOpen(false);
@@ -75,7 +61,7 @@ function App() {
       }
       setModalIsOpen(false);
     },
-    [userPlaces],
+    [userPlaces, setUserPlaces],
   );
 
   return (
