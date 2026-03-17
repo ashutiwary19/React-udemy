@@ -12,9 +12,22 @@ export default function AvailablePlaces({ onSelectPlace }) {
     .then((resData) => setAvailablePlaces(resData.places));*/
 
   useEffect(() => {
-    fetch("http://localhost:3000/places")
+    /* fetch("http://localhost:3000/places")
       .then((placesResponse) => placesResponse.json())
-      .then((resData) => setAvailablePlaces(resData.places));
+      .then((resData) => setAvailablePlaces(resData.places));*/
+    fetchPlaces();
+    async function fetchPlaces() {
+      const resposne = await fetch("http://localhost:3000/places");
+      const responseJson = await resposne.json();
+      setAvailablePlaces(responseJson.places);
+    }
+    /* const placePromise = fetchPlaces();
+    placePromise.then((places) => setAvailablePlaces(places));
+    async function fetchPlaces() {
+      const resposne = await fetch("http://localhost:3000/places");
+      const responseJson = await resposne.json();
+      return responseJson.places;
+    }*/
   }, []);
   return (
     <Places
