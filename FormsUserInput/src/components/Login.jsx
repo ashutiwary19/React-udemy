@@ -6,12 +6,24 @@ export default function Login() {
     password: "",
   });
 
+  const [didEdit, setDidEdit] = useState({
+    email: false,
+    password: false,
+  });
+
   // Not a good approach as empty will be valid
   // and even entering one char will give error
-  const validEmail = enteredValues != "" && !enteredValues.email.includes("@");
+  const validEmail = didEdit.email && !enteredValues.email.includes("@");
 
   function handleValueChange(key, value) {
     setEnteredValues((prevValues) => ({ ...prevValues, [key]: value }));
+  }
+
+  function handleInputFocusChange(key, val) {
+    setDidEdit((prev) => ({
+      ...prev,
+      [key]: val,
+    }));
   }
 
   function handleFormSubmission(event) {
@@ -32,6 +44,8 @@ export default function Login() {
             id="email"
             type="email"
             name="email"
+            onFocus={() => handleInputFocusChange("email", false)}
+            onBlur={() => handleInputFocusChange("email", true)}
             onChange={(event) => handleValueChange("email", event.target.value)}
             value={enteredValues.email}
           />
