@@ -6,6 +6,10 @@ export default function Login() {
     password: "",
   });
 
+  // Not a good approach as empty will be valid
+  // and even entering one char will give error
+  const validEmail = enteredValues != "" && !enteredValues.email.includes("@");
+
   function handleValueChange(key, value) {
     setEnteredValues((prevValues) => ({ ...prevValues, [key]: value }));
   }
@@ -31,6 +35,9 @@ export default function Login() {
             onChange={(event) => handleValueChange("email", event.target.value)}
             value={enteredValues.email}
           />
+          <div className="control-error">
+            {validEmail && <p>Please enter valid email</p>}
+          </div>
         </div>
 
         <div className="control no-margin">
