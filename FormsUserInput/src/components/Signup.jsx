@@ -10,6 +10,9 @@ export default function Signup() {
     const fdo = Object.fromEntries(fd.entries());
     fdo.acquisition = acquisitionChannel;
     console.log(fdo);
+
+    // Resets the form, but still imperative
+    event.target.reset();
   }
 
   return (
