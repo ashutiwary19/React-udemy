@@ -7,7 +7,7 @@ function App() {
     <>
       <Header />
       <main>
-        <LoginRefs />
+        <Signup />
       </main>
     </>
   );
