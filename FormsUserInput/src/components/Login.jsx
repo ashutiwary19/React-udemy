@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Input from "./Input";
+import { hasMinLength, isEmail, isNotEmpty } from "../util/validation";
 
 export default function Login() {
   const [enteredValues, setEnteredValues] = useState({
@@ -14,8 +15,9 @@ export default function Login() {
 
   // Not a good approach as empty will be valid
   // and even entering one char will give error
-  const validEmail = didEdit.email && !enteredValues.email.includes("@");
-  const validPassword = didEdit.password && enteredValues.password.length < 5;
+  const validEmail = didEdit.email && !isEmail(enteredValues.email);
+  const validPassword =
+    didEdit.password && !hasMinLength(enteredValues.password, 7);
 
   function handleValueChange(key, value) {
     setEnteredValues((prevValues) => ({ ...prevValues, [key]: value }));
