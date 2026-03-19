@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 export default function LoginRefs() {
   const email = useRef();
   const password = useRef();
+  const [emailIsInvalid, setEmailIsInvalid] = useState(false);
   // Downside : reseting is harder, ref should not be used as react is unware of change
   // as we are directly changing dom
   function handleFormSubmission(event) {
@@ -11,6 +12,13 @@ export default function LoginRefs() {
     console.log("Email : " + email.current.value);
     console.log("Password : " + password.current.value);
 
+    const emailIsValid = email.current.value.includes("@");
+    if (!emailIsValid) {
+      setEmailIsInvalid(!emailIsValid);
+      return;
+    } else {
+      setEmailIsInvalid(false);
+    }
     email.current.value = "";
     password.current.value = "";
   }
@@ -23,6 +31,9 @@ export default function LoginRefs() {
         <div className="control no-margin">
           <label htmlFor="email">Email</label>
           <input id="email" type="email" name="email" ref={email} />
+          <div className="control-error">
+            {emailIsInvalid && <p>Please enter valid email</p>}
+          </div>
         </div>
 
         <div className="control no-margin">
